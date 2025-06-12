@@ -1,0 +1,329 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+  background: radial-gradient(ellipse at center, #222 0%, #111 100%);
+  color: #fff;
+}
+
+body.light-theme {
+  background: radial-gradient(ellipse at center, #f0f0f0 0%, #e0e0e0 100%);
+  color: #333;
+}
+
+#instructions-container {
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 8px;
+  max-width: 780px; /* Match game container width roughly */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-theme #instructions-container {
+  background-color: #2c2c2c;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+body.light-theme #instructions-container {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#instructions-container h2 {
+  text-align: center;
+  transition: color 0.3s;
+}
+
+body.dark-theme #instructions-container h2 {
+  color: #eee;
+}
+
+body.light-theme #instructions-container h2 {
+  color: #333;
+}
+
+#instructions-container h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+#instructions-container ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+body.dark-theme #instructions-container ul {
+  color: #ccc;
+}
+
+body.light-theme #instructions-container ul {
+  color: #555;
+}
+
+#instructions-container ul {
+  line-height: 1.6;
+}
+
+#instructions-container ul li {
+  margin-bottom: 8px;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  /* overflow: hidden; */ /* Allow scrolling for header/footer */
+  flex-direction: column; /* Align items vertically */
+}
+
+/* Ensure this body definition does not conflict with theme-specific body styles */
+/* It might be better to merge common properties into the base body selector */
+/* and keep theme-specific ones separate. */
+
+header {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  transition: background-color 0.3s, border-bottom-color 0.3s;
+}
+
+body.dark-theme header {
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+body.light-theme header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+header {
+  box-sizing: border-box;
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  transition: color 0.3s;
+}
+
+body.dark-theme header h1 {
+  color: #eee;
+}
+
+body.light-theme header h1 {
+  color: #222;
+}
+
+header p {
+  margin: 0;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+body.dark-theme header p {
+  color: #bbb;
+}
+
+body.light-theme header p {
+  color: #555;
+}
+
+#game-container {
+  position: relative;
+  width: 800px;
+  max-width: 98vw;
+  aspect-ratio: 16/10;
+  margin: 0 auto;
+}
+#pong {
+  display: block;
+  border-radius: 16px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+body.dark-theme #pong {
+  background: linear-gradient(180deg, #333 80%, #444 100%);
+  box-shadow: 0 0 24px #000a;
+}
+
+body.light-theme #pong {
+  background: linear-gradient(180deg, #e0e0e0 80%, #d0d0d0 100%);
+  box-shadow: 0 0 24px #0003;
+}
+
+#pong {
+  margin: auto;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+#ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* height: 100%; Removed to allow content below canvas */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This will now mainly apply to scoreboard and win-message */
+  align-items: center;
+  pointer-events: none; /* Allow clicks to pass through to canvas for game control */
+}
+#scoreboard {
+  position: absolute;
+  top: 2%; left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.3em;
+  pointer-events: auto;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+body.dark-theme #scoreboard {
+  color: #fff;
+  text-shadow: 0 2px 8px #000c;
+}
+
+body.light-theme #scoreboard {
+  color: #333;
+  text-shadow: 0 1px 4px #0003;
+}
+/* Old #controls style, will be replaced or adjusted by #controls-bottom-container */
+#controls button, #controls select, #lang-switcher, #theme-switcher {
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 16px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+body.dark-theme #controls button, body.dark-theme #controls select, body.dark-theme #lang-switcher, body.dark-theme #theme-switcher {
+  background: #2b2b2b;
+  color: #fff;
+  box-shadow: 0 2px 6px #0003;
+}
+
+body.light-theme #controls button, body.light-theme #controls select, body.light-theme #lang-switcher, body.light-theme #theme-switcher {
+  background: #f0f0f0;
+  color: #333;
+  box-shadow: 0 2px 6px #0002;
+  border: 1px solid #ccc;
+}
+body.dark-theme #controls button:hover, body.dark-theme #controls select:focus, body.dark-theme #lang-switcher:hover, body.dark-theme #theme-switcher:hover {
+  background: #444;
+}
+
+body.light-theme #controls button:hover, body.light-theme #controls select:focus, body.light-theme #lang-switcher:hover, body.light-theme #theme-switcher:hover {
+  background: #e0e0e0;
+}
+#win-message {
+  position: absolute;
+  top: 45%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.3rem;
+  padding: 32px 50px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 10;
+  pointer-events: auto;
+  transition: opacity 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-theme #win-message {
+  background: rgba(30,30,30,0.92);
+  color: #fff;
+  box-shadow: 0 6px 32px #000a;
+}
+
+body.light-theme #win-message {
+  background: rgba(250,250,250,0.95);
+  color: #333;
+  box-shadow: 0 6px 32px #0003;
+}
+footer {
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+  transition: background-color 0.3s, border-top-color 0.3s;
+}
+
+body.dark-theme footer {
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+}
+
+body.light-theme footer {
+  background-color: #f8f8f8;
+  border-top: 1px solid #ddd;
+}
+
+footer {
+  box-sizing: border-box;
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+body.dark-theme footer p {
+  color: #aaa;
+}
+
+body.light-theme footer p {
+  color: #555;
+}
+
+#win-message.hidden {
+  display: none;
+}
+
+#controls-bottom-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  width: 100%;
+  margin-top: 10px; /* Space between canvas and controls */
+}
+
+#controls-bottom-container #controls {
+  display: flex;
+  gap: 10px;
+  pointer-events: auto; /* Make buttons clickable */
+  align-items: center; /* Vertically align items like select and buttons */
+}
+@media (max-width: 700px) {
+  #game-container {
+    width: 100vw;
+    min-width: 0;
+    aspect-ratio: unset;
+  }
+  #pong {
+    border-radius: 0;
+  }
+  #win-message {
+    font-size: 1.3rem;
+    padding: 16px 10px;
+  }
+}

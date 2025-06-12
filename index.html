@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title id="page-title">Pong Game - 简易乒乓</title>
+  <meta name="description" id="page-description" content="一个经典的乒乓球游戏，使用鼠标控制你的挡板，挑战不同难度的电脑对手！">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #controls-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+    #controls-container button {
+      padding: 8px 12px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #controls-container button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls-container">
+    <button id="lang-switcher" data-lang-zh="Switch to Chinese" data-lang-en="切换到英文">切换到英文</button>
+    <button id="theme-switcher" title="切换主题" aria-label="切换主题">切换主题</button>
+  </div>
+  <header>
+    <h1 id="game-title">Pong Game - 简易乒乓</h1>
+    <p id="game-description">一个经典的乒乓球游戏，使用鼠标控制你的挡板，挑战不同难度的电脑对手！</p>
+  </header>
+  <div id="instructions-container">
+    <h2 id="instructions-title"></h2>
+    <ul id="instructions-list"></ul>
+  </div>
+  <div id="game-container">
+    <canvas id="pong" width="800" height="500"></canvas>
+    <div id="ui">
+      <div id="scoreboard">
+        <span id="score-left">0</span>
+        <span> : </span>
+        <span id="score-right">0</span>
+      </div>
+      <div id="win-message" class="hidden"></div>
+    </div>
+  </div>
+  <div id="controls-bottom-container">
+    <div id="controls">
+      <button id="pause-btn" data-lang-zh="暂停" data-lang-en="Pause">暂停</button>
+      <button id="restart-btn" data-lang-zh="重新开始" data-lang-en="Restart">重新开始</button>
+      <button id="mode-toggle-btn" data-lang-zh="切换到AI模式" data-lang-en="Switch to AI Mode">切换到AI模式</button>
+      <select id="difficulty">
+        <option value="easy" data-lang-zh="简单" data-lang-en="Easy">简单</option>
+        <option value="normal" selected data-lang-zh="普通" data-lang-en="Normal">普通</option>
+        <option value="hard" data-lang-zh="困难" data-lang-en="Hard">困难</option>
+      </select>
+    </div>
+  </div>
+  <script src="pong.js"></script>
+  <script>
+    const translations = {
+      'zh-CN': {
+        'page-title': 'Pong Game - 简易乒乓',
+        'page-description': '一个经典的乒乓球游戏，使用鼠标控制你的挡板，挑战不同难度的电脑对手！',
+        'lang-switcher-text': '切换到英文',
+        'game-title': 'Pong Game - 简易乒乓',
+        'game-description': '一个经典的乒乓球游戏，使用鼠标控制你的挡板，挑战不同难度的电脑对手！',
+        'pause-btn': '暂停',
+        'resume-btn': '继续',
+        'restart-btn': '重新开始',
+        'difficulty-easy': '简单',
+        'difficulty-normal': '普通',
+        'difficulty-hard': '困难',
+        'mode-toggle-btn-ai': '切换到AI模式',
+        'mode-toggle-btn-2p': '切换到双人模式',
+        'win-message-left': '左边玩家胜利！🎉',
+        'win-message-right': '右边玩家胜利！🏆',
+        'win-message-player': '你赢了！🎉',
+        'win-message-cpu': '电脑胜利！💻',
+        'footer-text': '&copy; 由 Github Copilot 协作制作',
+        'instructions-title': '游戏说明',
+        'instructions-ai-mode': 'AI 模式：使用鼠标控制左侧挡板，与电脑对战。W/S 键或鼠标上下移动控制挡板。',
+        'instructions-2p-mode': '双人模式：左边玩家使用 W/S 键控制，右边玩家使用 ↑/↓ 键控制。',
+        'theme-switcher-to-light': '切换到白天模式',
+        'theme-switcher-to-dark': '切换到黑夜模式'
+      },
+     'en': {
+        'page-title': 'Pong Game',
+        'page-description': 'A classic Pong game. Control your paddle with the mouse and challenge computer opponents of varying difficulty!',
+        'lang-switcher-text': 'Switch to Chinese',
+        'game-title': 'Pong Game',
+        'game-description': 'A classic Pong game. Control your paddle with the mouse and challenge computer opponents of varying difficulty!',
+        'pause-btn': 'Pause',
+        'resume-btn': 'Resume',
+        'restart-btn': 'Restart',
+        'difficulty-easy': 'Easy',
+        'difficulty-normal': 'Normal',
+        'difficulty-hard': 'Hard',
+        'mode-toggle-btn-ai': 'Switch to AI Mode',
+        'mode-toggle-btn-2p': 'Switch to 2P Mode',
+        'win-message-left': 'Left Player Wins! 🎉',
+        'win-message-right': 'Right Player Wins! 🏆',
+        'win-message-player': 'You Win! 🎉',
+        'win-message-cpu': 'CPU Wins! 💻',
+        'footer-text': '&copy; 2024 Created in collaboration with Github Copilot',
+        'instructions-title': 'Instructions',
+        'instructions-ai-mode': 'AI Mode: Control the left paddle with your mouse or W/S keys to play against the computer.',
+        'instructions-2p-mode': '2P Mode: Left player uses W/S keys, Right player uses ↑/↓ keys.',
+        'theme-switcher-to-light': 'Switch to Light Mode',
+        'theme-switcher-to-dark': 'Switch to Dark Mode'
+      }
+    };
+
+    let currentLang = 'zh-CN';
+    const langSwitcherButton = document.getElementById('lang-switcher');
+    const themeSwitcherButton = document.getElementById('theme-switcher');
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.getElementById('page-title').textContent = translations[lang]['page-title'];
+      const descMeta = document.querySelector('meta[name="description"]');
+      if(descMeta) descMeta.content = translations[lang]['page-description'];
+      
+      langSwitcherButton.textContent = translations[lang]['lang-switcher-text'];
+      langSwitcherButton.setAttribute('data-lang-zh', translations['zh-CN']['lang-switcher-text']);
+      langSwitcherButton.setAttribute('data-lang-en', translations['en']['lang-switcher-text']);
+
+      document.getElementById('game-title').textContent = translations[lang]['game-title'];
+      document.getElementById('game-description').textContent = translations[lang]['game-description'];
+      
+      const pauseBtn = document.getElementById('pause-btn');
+      pauseBtn.textContent = translations[lang]['pause-btn'];
+
+      const restartBtn = document.getElementById('restart-btn');
+      restartBtn.textContent = translations[lang]['restart-btn'];
+
+      const difficultySelect = document.getElementById('difficulty');
+      difficultySelect.querySelector('option[value="easy"]').textContent = translations[lang]['difficulty-easy'];
+      difficultySelect.querySelector('option[value="normal"]').textContent = translations[lang]['difficulty-normal'];
+      difficultySelect.querySelector('option[value="hard"]').textContent = translations[lang]['difficulty-hard'];
+
+      const modeToggleButton = document.getElementById('mode-toggle-btn');
+      if (modeToggleButton && typeof gameMode !== 'undefined') {
+        modeToggleButton.textContent = gameMode === 'ai' ? translations[lang]['mode-toggle-btn-2p'] : translations[lang]['mode-toggle-btn-ai'];
+      }
+
+      const pauseButton = document.getElementById('pause-btn');
+      if (pauseButton && typeof game !== 'undefined' && game.running) {
+         pauseButton.textContent = game.paused ? translations[lang]['resume-btn'] : translations[lang]['pause-btn'];
+      } else if (pauseButton) {
+         pauseButton.textContent = translations[lang]['pause-btn'];
+      }
+
+      document.getElementById('footer-text').innerHTML = translations[lang]['footer-text'];
+
+      document.getElementById('instructions-title').textContent = translations[lang]['instructions-title'];
+      const instructionsList = document.getElementById('instructions-list');
+      instructionsList.innerHTML = `<li>${translations[lang]['instructions-ai-mode']}</li>
+        <li>${translations[lang]['instructions-2p-mode']}</li>`;
+
+      if (themeSwitcherButton && translations[lang]) {
+        const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        themeSwitcherButton.textContent = currentTheme === 'dark' ? translations[lang]['theme-switcher-to-light'] : translations[lang]['theme-switcher-to-dark'];
+      }
+    }
+
+    langSwitcherButton.addEventListener('click', () => {
+      const newLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+      setLanguage(newLang);
+    });
+
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+      }
+      if (themeSwitcherButton && translations[currentLang]) {
+         themeSwitcherButton.textContent = theme === 'dark' ? translations[currentLang]['theme-switcher-to-light'] : translations[currentLang]['theme-switcher-to-dark'];
+      }
+    }
+
+    themeSwitcherButton.addEventListener('click', () => {
+      const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+      setLanguage(currentLang);
+    });
+  </script>
+  <footer>
+    <p id="footer-text">&copy; 2025 由 Github Copilot 协作制作 </p>
+  </footer>
+</body>
+</html>
