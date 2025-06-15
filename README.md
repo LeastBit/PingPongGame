@@ -30,3 +30,6 @@
    - **语言切换按钮**：在中文和英文之间切换界面语言。
 4. 尝试击球并防止球越过你的球拍，先得到设定分数的玩家获胜。
 5. 游戏玩法说明也直接显示在游戏页面的顶部。
+<p align="center">
+<img src="https://profile-counter.glitch.me/LeastBit/PingPongGame/count.svg" alt="Visitor Count" />
+</p>
