@@ -3,7 +3,12 @@
 <div align="center">
   <a href="README.md">中文</a> | <a href="README.en.md">English</a>
 </div>
-
+<div align="center">
+  技术栈
+</div>
+<p align="center">
+  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=html,css,javascript&theme=dark&perline=17" alt="My Skills" /></a>
+</p>
 这是一个使用 HTML、CSS 和 JavaScript 实现的经典乒乓球游戏，具有简单直观的界面和多种功能。
 
 ## 游戏截图
@@ -30,6 +35,3 @@
    - **语言切换按钮**：在中文和英文之间切换界面语言。
 4. 尝试击球并防止球越过你的球拍，先得到设定分数的玩家获胜。
 5. 游戏玩法说明也直接显示在游戏页面的顶部。
-<p align="center">
-<img src="https://profile-counter.glitch.me/LeastBit/PingPongGame/count.svg" alt="Visitor Count" />
-</p>
